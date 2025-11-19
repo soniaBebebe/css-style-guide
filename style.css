@@ -107,3 +107,29 @@ h1{
     color: #0b0d10;
     font-weight: 600;
 }
+.row{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+.label{
+    color: var(--muted);
+    font-size: 12px;
+}
+input[type="text"], input[type="number"], select{
+    height: 40px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: #0b0f14;
+    color: var(--text);
+    padding: 0 12px;
+}
+input[type="color"]{
+    height: 40px;
+    width: 100%;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+}
+input[type="range"]{
+    width: 100%;
+}
