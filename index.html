@@ -31,6 +31,18 @@
                         <span class="label">Saturation</span>
                         <input type="range" id="sat" min="0" max="100" value="78">
                     </label>
+                    <label>
+                        <span class="label">Success</span>
+                        <input type="color" id="successColor" value="#52d273">
+                    </label>
+                    <label>
+                        <span class="label">Warning</span>
+                        <input type="color" id="warningColor" value="#ffcf5c">
+                    </label>
+                    <label>
+                        <span class="label">Danger</span>
+                        <input type="color" id="dangerColor" value="#ff6b6b">
+                    </label>
                 </div>
                 <label>
                     <span class="label">Lightness</span>
@@ -39,14 +51,14 @@
             </div>
             <h1>CSS Style Guide Generator</h1>
             <p class="muted">Base of the project. Then we will add controls, token generation, pallets and export</p>
-            <h2 style="font-seze:12px; letter-spacing:.18em; text-transform:uppercase; color:var(--muted); margin-top:18px;">Quick start</h2>
+            <h2 style="font-size:12px; letter-spacing:.18em; text-transform:uppercase; color:var(--muted); margin-top:18px;">Quick start</h2>
             <ol style="margin:8px 0 14px 18px; color:var(--muted);">
                 <li>Open file in browser</li>
                 <li>Check dvuhkolonochni maket</li>
                 <li>Get ready to add forms and logic (lesson 3+)</li>
             </ol>
             <div style="display:flex; gap:10px; flex-wrap:wrap;">
-                <button class="btn primary" onclick="alert">Check</button>
+                <button class="btn primary" onclick="alert('Check OK!')">Check</button>
                 <button class="btn" onclick="window.scrollTo({top:document.body.scrollHeight, behavior:'smooth'})">Preview</button>
             </div>
         </aside>
@@ -62,6 +74,7 @@
                         <button class="btn primary">Primary</button>
                         <button class="btn">Secondary</button>
                     </div>
+                    <div id="palettePreview" style="display:grid; grid-template-columns:repeat(5,1fr); gap:8px; margin-top:20px;"></div>
                 </section>
                 <section class="card half">
                     <h3 style="margin:0 0 8px; font-family:'Manrope', system-ui;">Sostoyanie maketa</h3>

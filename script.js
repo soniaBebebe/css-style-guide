@@ -8,24 +8,45 @@ const btnPrimary=document.querySelector('.btn.primary');
 
 function updateUI(){
     const brand=brandName.value;
+    let hex;
     const h=Number(hue.value);
     const s=Number(sat.value);
     const l=Number(lig.value);
+    // const h=Number(hue.value);
+    // const s=Number(sat.value);
+    // const l=Number(lig.value);
 
-    const computerHex=hslToHex(h,s,l);
+    // const computerHex=hslToHex(h,s,l);
 
+    // brandTitle.textContent=brand;
+    // btnPrimary.style.background=computerHex;
+    // btnPrimary.style.borderColor=computerHex;
+
+    // document.documentElement.style.setProperty('--accent', computerHex);
+
+    // const debug={
+    //     brand, 
+    //     h,s,l,
+    //     computerHex
+    // };
+    // console.log(debug);
+    if (primaryColor===document.activeElement){
+        hex=primaryColor.value;
+    } else{
+        
+        hex=hslToHex(h,s,l);
+
+        primaryColor.value=hex;
+    }
     brandTitle.textContent=brand;
-    btnPrimary.style.background=computerHex;
-    btnPrimary.style.borderColor=computerHex;
+    btnPrimary.style.background=hex;
+    btnPrimary.style.borderColor=hex;
+    const palette=generatePalette(h,s,l);
+    renderPalette(palette);
 
-    document.documentElement.style.setProperty('--accent', computerHex);
-
-    const debug={
-        brand, 
-        h,s,l,
-        computerHex
-    };
-    console.log(debug);
+    document.documentElement.style.setProperty("--accent", hex);
+    console.log({brand,hex});
+    
 }
 
 brandName.addEventListener('input', updateUI);
@@ -55,4 +76,57 @@ function rgbToHex(r,g,b){
 function hslToHex(h,s,l){
     const [r,g,b]=hslToRgb(h,s,l);
     return rgbToHex(r,g,b);
+}
+
+function generatePalette(baseH, baseS, baseL){
+    const tones=[100,200,300,400,500,600,700,800,900];
+    const palette={};
+
+    tones.forEach((tone,index)=>{
+        const shift=index-4;
+        const l=Math.min(95,Math.max(8,baseL-shift*8));
+        const s=Math.min(95, Math.max(20,baseS+shift*4));
+        const hex=hslToHex(baseH, s, l);
+        
+        palette[tone]=hex;
+    })
+    return palette;
+}
+
+function renderPalette(palette){
+    const container=document.getElementById("palettePreview");
+    container.innerHTML="";
+
+    Object.entries(palette).forEach(([tone,hex])=>{
+        const div=document.createElement("div")
+        div.style.background=hex;
+        div.style.borderRadius="8px";
+        div.style.padding="10px";
+        div.style.color="#fff";
+        div.style.fontSize="12px";
+        div.style.boxShadow="0 0 5px rgba(0,0,0,.2)";
+        div.style.display="flex";
+        div.style.flexDirection="column";
+        div.style.gap="4px";
+
+        div.innerHTML=`
+        <strong>${tone}</strong>
+        <spn>${hex}</span>
+        `;
+        container.appendChild(div);
+    })
+}
+
+function generateGrayPalette(baseH, baseS, baseL){
+    const tones=[100,200,300,400,500,600,700,800,900];
+    const palette={};
+
+    tones.forEach((tone,index)=>{
+        const shift=index-4;
+        const l=Math.min(95,Math.max(8,baseL-shift*8));
+        const s=10;
+        const hex=hslToHex(210,s,l);
+        palette[tone]=hex;
+    })
+    return palette;
 }
