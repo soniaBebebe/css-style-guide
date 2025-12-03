@@ -8,6 +8,9 @@ const btnPrimary=document.querySelector('.btn.primary');
 const successColor=document.getElementById('successColor');
 const warningColor=document.getElementById('warningColor');
 const dangerColor=document.getElementById('dangerColor');
+const headingFont=document.getElementById('headingFont');
+const bodyFont=document.getElementById('bodyFont');
+const fontScale=document.getElementById('fontScale');
 
 function updateUI(){
     const brand=brandName.value;
@@ -51,6 +54,10 @@ function updateUI(){
     console.log({brand,hex});
     
     renderSemanticColors(getSemanticColors());
+    renderTypography({
+        headingFont: headingFont.value,
+        bodyFont: bodyFont.value
+    }, Number(fontScale.value));
 }
 
 brandName.addEventListener('input', updateUI);
@@ -61,6 +68,9 @@ lig.addEventListener('input', updateUI);
 successColor.addEventListener("input", updateUI);
 warningColor.addEventListener("input", updateUI);
 dangerColor.addEventListener("input", updateUI);
+headingFont.addEventListener("input", updateUI);
+bodyFont.addEventListener("input", updateUI);
+fontScale.addEventListener("input", updateUI);
 
 updateUI();
 
@@ -161,4 +171,37 @@ function renderSemanticColors(colors){
         div.textContent=`${name}: ${hex}`;
         container.appendChild(div);
     })
+}
+
+function generateTypeScale(scale=1){
+    return{
+        h1:32*scale,
+        h2:24*scale,
+        h3:20*scale,
+        bodyLg:18*scale,
+        body:16*scale,
+        small:14*scale
+    };
+}
+
+function renderTypography(fonts,scale){
+    const preview=document.getElementById("typoPreview");
+    preview.innerHTML="";
+    const sizes=generateTypeScale(scale);
+
+    const html=`
+    <div style="font-family:${fonts.headingFont}; font-size:${sizes.h1}px; font-weight:700;">Heading H1 - ${sizes.h1}px</div>
+    <div style="font-family:${fonts.headingFont}; font-size:${sizes.h2}px; font-weight:600; margin-top:8px">Heading H2 - ${sizes.h2}px</div>
+    <div style="font-family:${fonts.headingFont}; font-size:${sizes.h3}px; font-weight:600; margin-top:8px">Heading H3 - ${sizes.h3}px</div>
+    <p style="font-family:${fonts.bodyFont}; font-size:${sizes.bodyLg}px; margin-top:14px;">
+    Body Large - ${sizes.bodyLg}px. This is example text.
+    </p>
+    <p style="font-family:${fonts.bodyFont}; font-size:${sizes.body}px;">
+    Body - ${sizes.body}px. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+    </p>
+    <p style="font-family:${fonts.bodyFont}; font-size:${sizes.small}px; opacity:0.7;">
+    Small Text - ${sizes.small}px.
+    </p>
+    `
+    preview.innerHTML=html;
 }
