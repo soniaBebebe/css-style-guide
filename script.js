@@ -5,6 +5,9 @@ const sat=document.getElementById('sat');
 const lig=document.getElementById('lig');
 const brandTitle=document.querySelector('#brandTitle');
 const btnPrimary=document.querySelector('.btn.primary');
+const successColor=document.getElementById('successColor');
+const warningColor=document.getElementById('warningColor');
+const dangerColor=document.getElementById('dangerColor');
 
 function updateUI(){
     const brand=brandName.value;
@@ -47,6 +50,7 @@ function updateUI(){
     document.documentElement.style.setProperty("--accent", hex);
     console.log({brand,hex});
     
+    renderSemanticColors(getSemanticColors());
 }
 
 brandName.addEventListener('input', updateUI);
@@ -54,6 +58,9 @@ primaryColor.addEventListener('input', updateUI);
 hue.addEventListener('input', updateUI);
 sat.addEventListener('input', updateUI);
 lig.addEventListener('input', updateUI);
+successColor.addEventListener("input", updateUI);
+warningColor.addEventListener("input", updateUI);
+dangerColor.addEventListener("input", updateUI);
 
 updateUI();
 
@@ -129,4 +136,29 @@ function generateGrayPalette(baseH, baseS, baseL){
         palette[tone]=hex;
     })
     return palette;
+}
+
+function getSemanticColors(){
+    return{
+        sucess:successColor.value,
+        warning:warningColor.value,
+        danger:dangerColor.value
+    };
+}
+
+function renderSemanticColors(colors){
+    const container=document.getElementById("semanticPreview");
+    container.innerHTML="";
+    Object.entries(colors).forEach(([name,hex])=>{
+        const div=document.createElement("div");
+        div.style.background=hex;
+        div.style.padding="12px 18px";
+        div.style.borderRadius="8px";
+        div.style.boxShadow="0 0 5px rgba(0,0,0,.2)";
+        div.style.color="#fff";
+        div.style.fontWeight="600";
+        div.style.minWidth="120px";
+        div.textContent=`${name}: ${hex}`;
+        container.appendChild(div);
+    })
 }
