@@ -3,124 +3,151 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
     <title>CSS Style Guide!</title>
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&family=Inter:wght@400;500;600&family=Poppins:wght@400;600&family=Montserrat:wght@400;600&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
-</head>
-<body>
-    <div class="app">
-        <aside class="panel left">
-            <h2>Brand</h2>
-            <div>
-                <label>
-                    <span class="label">Brand Name</span>
-                    <input type="text" id="brandName" placeholder="Acme UI" value="Acme UI">
-                </label>
-                <label>
-                    <span class="label">Primary color</span>
-                    <input type="color" id="primaryColor" value="#6aa9ff">
-                </label>
-            </div>
-            <div>
-                <h2>Color Tuning</h2>
-                <div class="row">
-                    <label>
-                        <span class="label">Hue</span>
-                        <input type="range" id="hue" min="0" max="360" value="215">
-                    </label>
-                    <label>
-                        <span class="label">Saturation</span>
-                        <input type="range" id="sat" min="0" max="100" value="78">
-                    </label>
-                    <label>
-                        <span class="label">Success</span>
-                        <input type="color" id="successColor" value="#52d273">
-                    </label>
-                    <label>
-                        <span class="label">Warning</span>
-                        <input type="color" id="warningColor" value="#ffcf5c">
-                    </label>
-                    <label>
-                        <span class="label">Danger</span>
-                        <input type="color" id="dangerColor" value="#ff6b6b">
-                    </label>
-                </div>
-                <h2>Typography</h2>
-                <div class="row">
-                    <label>
-                        <span class="label">Heading Font</span>
-                        <select id="headingFont">
-                            <option value="Manrope">Manrope</option>
-                            <option value="Poppins">Poppins</option>
-                            <option value="Inter">Inter</option>
-                            <option value="Montserrat">Montserrat</option>
-                            <option value="Playfair Display">Playfair Display</option>
-                        </select>
-                    </label>
-                    <label>
-                        <span class="label">Body Font</span>
-                        <select id="bodyFont">
-                            <option value="Inter">Inter</option>
-                            <option value="Figtree">Figtree</option>
-                            <option value="Nunito Sans">Nunito Sans</option>
-                            <option value="Roboto">Roboto</option>
-                            <option value="Open Sans">Open Sans</option>
-                        </select>
-                    </label>
-                    <label>
-                        <span class="label">Font Scale</span>
-                        <input id="fontScale" min="0.8" max="1.4" step="0.05" vlaue="1" type="range">
-                    </label>
-                </div>
-                <label>
-                    <span class="label">Lightness</span>
-                    <input id="lig" type="range" min="0" max="100" value="62">
-                </label>
-            </div>
-            <h1>CSS Style Guide Generator</h1>
-            <p class="muted">Base of the project. Then we will add controls, token generation, pallets and export</p>
-            <h2 style="font-size:12px; letter-spacing:.18em; text-transform:uppercase; color:var(--muted); margin-top:18px;">Quick start</h2>
-            <ol style="margin:8px 0 14px 18px; color:var(--muted);">
-                <li>Open file in browser</li>
-                <li>Check dvuhkolonochni maket</li>
-                <li>Get ready to add forms and logic (lesson 3+)</li>
-            </ol>
-            <div style="display:flex; gap:10px; flex-wrap:wrap;">
-                <button class="btn primary" onclick="alert('Check OK!')">Check</button>
-                <button class="btn" onclick="window.scrollTo({top:document.body.scrollHeight, behavior:'smooth'})">Preview</button>
-            </div>
-        </aside>
-        <main class="panel right">
-            <div class="grid">
-                <section class="card half">
-                    <h3 style="margin:0 0 8px; font-family:'Manrope', system-ui;">Preview</h3>
-                    <p class="muted">Here you'll have rendering pallete, typographika, buttons, forms and contrast check</p>
-                    <div id="brandTitle" class="preview-title" style="font-size:28px; font-weight:700;">
-                        Acme UI
-                    </div>
-                    <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px">
-                        <button class="btn primary">Primary</button>
-                        <button class="btn">Secondary</button>
-                    </div>
-                    <div id="palettePreview" style="display:grid; grid-template-columns:repeat(5,1fr); gap:8px; margin-top:20px;"></div>
-                </section>
-                <section class="card half">
-                    <h3 style="margin:0 0 8px; font-family:'Manrope', system-ui;">Sostoyanie maketa</h3>
-                    <ul class="muted" style="margin:6px 0 0 18px;">
-                        <li>Dvuhkolonochnii layout is ready</li>
-                        <li>Dark theme and base tokens oformleni</li>
-                        <li>Left panel -- sticky</li>
-                    </ul>
-                </section>
-                <section class="card full" style="margin-top:20px;">
-                    <h3 class="muted">Typography Preview</h3>
-                    <div id="typoPreview" style="margin-top:12px;">
+    <link rel="stylesheet" href="style.css">
 
-                    </div>
-                </section>
-            </div>
-        </main>
-    </div>
-    <script src="script.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&
+    family=Inter:wght@400;500;600&
+    family=Poppins:wght@400;600&
+    family=Montserrat:wght@400;600&
+    family=Playfair+Display:wght@400;600&
+    display=swap" rel="stylesheet">
+</head>
+
+<body>
+<div class="app">
+
+    <aside class="panel left">
+
+        <h2>Brand</h2>
+        <div class="row">
+            <label>
+                <span class="label">Brand Name</span>
+                <input type="text" id="brandName" value="Acme UI">
+            </label>
+
+            <label>
+                <span class="label">Primary Color</span>
+                <input type="color" id="primaryColor" value="#6aa9ff">
+            </label>
+        </div>
+
+        <h2>Color Tuning</h2>
+        <div class="row">
+            <label>
+                <span class="label">Hue</span>
+                <input type="range" id="hue" min="0" max="360" value="215">
+            </label>
+
+            <label>
+                <span class="label">Saturation</span>
+                <input type="range" id="sat" min="0" max="100" value="78">
+            </label>
+        </div>
+
+        <label>
+            <span class="label">Lightness</span>
+            <input id="lig" type="range" min="0" max="100" value="62">
+        </label>
+
+        <h2>Semantic Colors</h2>
+        <div class="row">
+            <label>
+                <span class="label">Success</span>
+                <input type="color" id="successColor" value="#52d273">
+            </label>
+
+            <label>
+                <span class="label">Warning</span>
+                <input type="color" id="warningColor" value="#ffcf5c">
+            </label>
+        </div>
+
+        <label>
+            <span class="label">Danger</span>
+            <input type="color" id="dangerColor" value="#ff6b6b">
+        </label>
+
+        <h2>Typography</h2>
+        <div class="row">
+            <label>
+                <span class="label">Heading Font</span>
+                <select id="headingFont">
+                    <option value="Manrope">Manrope</option>
+                    <option value="Poppins">Poppins</option>
+                    <option value="Inter">Inter</option>
+                    <option value="Montserrat">Montserrat</option>
+                    <option value="Playfair Display">Playfair Display</option>
+                </select>
+            </label>
+
+            <label>
+                <span class="label">Body Font</span>
+                <select id="bodyFont">
+                    <option value="Inter">Inter</option>
+                    <option value="Figtree">Figtree</option>
+                    <option value="Nunito Sans">Nunito Sans</option>
+                    <option value="Roboto">Roboto</option>
+                    <option value="Open Sans">Open Sans</option>
+                </select>
+            </label>
+        </div>
+
+        <label>
+            <span class="label">Font Scale</span>
+            <input id="fontScale" type="range" min="0.8" max="1.4" step="0.05" value="1">
+        </label>
+
+        <h1 style="margin-top:30px;">CSS Style Guide Generator</h1>
+        <p class="muted">Dynamic generator for UI tokens: colors, fonts, palettes, semantic colors.</p>
+
+    </aside>
+
+
+    <main class="panel right">
+        <div class="grid">
+
+            <section class="card half">
+                <h3>Brand Preview</h3>
+
+                <div id="brandTitle" class="preview-title" style="font-size:28px; font-weight:700;">
+                    Acme UI
+                </div>
+
+                <p class="muted">Your brand preview with selected tokens.</p>
+
+                <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;">
+                    <button class="btn primary">Primary</button>
+                    <button class="btn">Secondary</button>
+                </div>
+
+                <h3 style="margin-top:20px;">Primary Palette</h3>
+                <div id="palettePreview"
+                     style="display:grid; grid-template-columns:repeat(5,1fr); gap:8px; margin-top:10px;">
+                </div>
+
+                <h3 style="margin-top:20px;">Gray Palette</h3>
+                <div id="grayPreview"
+                     style="display:grid; grid-template-columns:repeat(5,1fr); gap:8px; margin-top:10px;">
+                </div>
+
+                <h3 style="margin-top:20px;">Semantic Colors</h3>
+                <div id="semanticPreview"
+                     style="display:flex; gap:12px; flex-wrap:wrap; margin-top:10px;">
+                </div>
+            </section>
+
+
+            <section class="card half">
+                <h3>Typography Preview</h3>
+                <div id="typoPreview" style="margin-top:12px;"></div>
+            </section>
+
+        </div>
+    </main>
+
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>
