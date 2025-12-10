@@ -11,6 +11,7 @@ const dangerColor=document.getElementById('dangerColor');
 const headingFont=document.getElementById('headingFont');
 const bodyFont=document.getElementById('bodyFont');
 const fontScale=document.getElementById('fontScale');
+const imageInput=document.getElementById('imageInput')
 
 function updateUI(){
     const brand=brandName.value;
@@ -73,6 +74,7 @@ dangerColor.addEventListener("input", updateUI);
 headingFont.addEventListener("input", updateUI);
 bodyFont.addEventListener("input", updateUI);
 fontScale.addEventListener("input", updateUI);
+imageInput.addEventListener("change", handleImageUpload);
 
 updateUI();
 
@@ -206,4 +208,48 @@ function renderTypography(fonts,scale){
     </p>
     `
     preview.innerHTML=html;
+}
+function handleImageUpload(event){
+    const file=event.target.files[0];
+    if (!file) return;
+
+    const img=new Image();
+    img.onload =()=> extractColorsFromImage(img);
+    img.src=URL.createObjectURL(file); 
+}
+
+function extractColorsFromImage(img){
+    const canvas=document.getElementById('colorCanvas');
+    const ctx =canvas.getContext("2d");
+
+    canvas.width=200;
+    canvas.height=200;
+    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+    const {data}=ctx.getImageData(0,0,canvas.width,canvas.height);
+
+    const pixels=[];
+    for (let i=0; i<data.length; i+=4){
+        pixels.push([data[i], data[i+1], data[1+2]]);
+    }
+    const colors=kmeansColors(pixels,6);
+    renderImagePalette(colors);
+}
+function kmeansColors(pixels, k=6, iterations=6){
+    let centroids = pixels.sort(()=> Math.random()-0.5).slice(0,k);
+    for (let iter=0; iter<iterations; iter++){
+        const groups = Array.from({length:k}, ()=>[]);
+        pixels.forEach(p=>{
+            let minDist=Infinity;
+            let idx=0;
+            centroids.forEach((c,i)=>{
+                const d=(p[0]-c[0]**2 + (p[1]-c[1])**2 + (p[2]-c[2])**2);
+                if (d<minDist){
+                    minDist=d;
+                    idx=i;
+                }
+            });
+            groups[idx].push(p);
+        })
+    }
 }

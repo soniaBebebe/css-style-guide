@@ -27,7 +27,7 @@ body{
 }
 .app{
     display: grid;
-    grid-template-columns: 360px, 1fr;
+    grid-template-columns: 360px 1fr;
     gap: 20px;
     max-width: 1400px;
     margin: 0 auto;
@@ -46,7 +46,7 @@ aside.left{
     height: calc(100vh - 40px);
     overflow: auto;
 }
-.main.right{
+.panel.right{
     padding: 18px;
 }
 h1{
