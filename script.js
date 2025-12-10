@@ -49,6 +49,8 @@ function updateUI(){
     btnPrimary.style.borderColor=hex;
     const palette=generatePalette(h,s,l);
     renderPalette(palette);
+    const gray=generateGrayPalette(h,s,l);
+    renderPalette(gray);
 
     document.documentElement.style.setProperty("--accent", hex);
     console.log({brand,hex});
@@ -128,7 +130,7 @@ function renderPalette(palette){
 
         div.innerHTML=`
         <strong>${tone}</strong>
-        <spn>${hex}</span>
+        <span>${hex}</span>
         `;
         container.appendChild(div);
     })
@@ -150,7 +152,7 @@ function generateGrayPalette(baseH, baseS, baseL){
 
 function getSemanticColors(){
     return{
-        sucess:successColor.value,
+        success:successColor.value,
         warning:warningColor.value,
         danger:dangerColor.value
     };
