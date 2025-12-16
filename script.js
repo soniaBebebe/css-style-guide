@@ -230,7 +230,7 @@ function extractColorsFromImage(img){
 
     const pixels=[];
     for (let i=0; i<data.length; i+=4){
-        pixels.push([data[i], data[i+1], data[1+2]]);
+        pixels.push([data[i], data[i+1], data[i+2]]);
     }
     const colors=kmeansColors(pixels,6);
     renderImagePalette(colors);
@@ -243,7 +243,7 @@ function kmeansColors(pixels, k=6, iterations=6){
             let minDist=Infinity;
             let idx=0;
             centroids.forEach((c,i)=>{
-                const d=(p[0]-c[0]**2 + (p[1]-c[1])**2 + (p[2]-c[2])**2);
+                const d=(p[0]-c[0])**2 + (p[1]-c[1])**2 + (p[2]-c[2])**2;
                 if (d<minDist){
                     minDist=d;
                     idx=i;
@@ -252,4 +252,20 @@ function kmeansColors(pixels, k=6, iterations=6){
             groups[idx].push(p);
         })
     }
+    return centroids.map(c=> rgbToHex(c[0], c[1],c[2]));
+}
+
+function renderGrayPalette(palette){
+    const container=document.getElementById("grayPreview");
+    container.innerHTML="";
+    Object.entries(palette).forEach(([tone,hex])=>{
+        const div=document.createElement("div");
+        div.style.background=hex;
+        div.style.borderRadius="8px";
+        div.style.padding="10px";
+        div.style.color="#fff";
+        div.style.fontSize="12px";
+        div.innerHTML=`<strong>${tone}</strong><span>${hex}</span>`;
+        container.appendChild(div);
+    })
 }
