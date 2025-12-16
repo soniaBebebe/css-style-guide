@@ -300,3 +300,32 @@ function renderImagePalette(colors){
         container.appendChild(div);
     });
 }
+
+function collectTokens(){
+    const h=Number(hue.value);
+    const s=Number(sat.value);
+    const l=Number(lig.value);
+
+    const primary=generatePalette(h,s,l);
+    const gray=generateGrayPalette(h,s,l);
+
+    return{
+        brand: {name:brandName.value},
+        colors: {
+            primary, gray, semantic:getSemanticColors()
+        },
+        typography:{
+            headingFont:headingFont.value,
+            bodyFont: bodyFont.value,
+            scale:generateTypeScale(Number(fontScale.value))
+        }
+    }
+}
+
+function exportCSS(){
+    const tokens=collectTokens();
+    let css=`:root{\n`;
+    Object.entries(tokens.colors.primary).forEach(([k,v])=>{
+        css+=` --color-primary-${k}: ${v};\n`;
+    })
+}
