@@ -51,7 +51,7 @@ function updateUI(){
     const palette=generatePalette(h,s,l);
     renderPalette(palette);
     const gray=generateGrayPalette(h,s,l);
-    renderPalette(gray);
+    renderGrayPalette(gray);
 
     document.documentElement.style.setProperty("--accent", hex);
     console.log({brand,hex});
@@ -251,6 +251,13 @@ function kmeansColors(pixels, k=6, iterations=6){
             });
             groups[idx].push(p);
         })
+        centroids=groups.map(g=>{
+            if (g.length===0) return[0,0,0];
+            const r=g.reduce((s,p)=>s+p[0],0)/g.length;
+            const g_=g.reduce((s,p)=>s+p[1],0)/g.length;
+            const b=g.reduce((s,p)=>s+p[2],0)/g.length;
+            return [Math.round(r), Math.round(g_), Math.round(b)];
+        });
     }
     return centroids.map(c=> rgbToHex(c[0], c[1],c[2]));
 }
@@ -268,4 +275,28 @@ function renderGrayPalette(palette){
         div.innerHTML=`<strong>${tone}</strong><span>${hex}</span>`;
         container.appendChild(div);
     })
+}
+
+function renderImagePalette(colors){
+    const container=document.getElementById("imagePalette");
+    container.innerHTML="";
+
+    colors.forEach(hex=>{
+        const div=document.createElement("div");
+        div.style.background=hex;
+        div.style.width="90px";
+        div.style.height="90px";
+
+        div.style.borderRadius="12px";
+        div.style.display="flex";
+        div.style.alignItems="flex-end";
+        div.style.justifyContent="center";
+        div.style.color="#fff";
+
+        div.style.fontSize="12px";
+        div.style.padding="6px";
+        div.style.boxShadow="0 0 5px rgba(0,0,0,.2)";
+        div.textContent=hex;
+        container.appendChild(div);
+    });
 }
