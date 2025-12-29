@@ -12,6 +12,7 @@ const headingFont=document.getElementById('headingFont');
 const bodyFont=document.getElementById('bodyFont');
 const fontScale=document.getElementById('fontScale');
 const imageInput=document.getElementById('imageInput')
+let extractedPalette=[];
 
 function updateUI(){
     const brand=brandName.value;
@@ -233,6 +234,7 @@ function extractColorsFromImage(img){
         pixels.push([data[i], data[i+1], data[i+2]]);
     }
     const colors=kmeansColors(pixels,6);
+    extractedPalette=colors;
     renderImagePalette(colors);
 }
 function kmeansColors(pixels, k=6, iterations=6){
@@ -312,7 +314,7 @@ function collectTokens(){
     return{
         brand: {name:brandName.value},
         colors: {
-            primary, gray, semantic:getSemanticColors()
+            primary, gray, semantic:getSemanticColors(), image:extractedPalette
         },
         typography:{
             headingFont:headingFont.value,
@@ -327,5 +329,34 @@ function exportCSS(){
     let css=`:root{\n`;
     Object.entries(tokens.colors.primary).forEach(([k,v])=>{
         css+=` --color-primary-${k}: ${v};\n`;
+    });
+    Object.entries(tokens.colors.gray).forEach(([k,v])=>{
+        css+=` --color-gray-${k}: ${v};\n`;
+    });
+    Object.entries(tokens.colors.semantic).forEach(([k,v])=>{
+        css+=` --color-${k}: ${v};\n`;
+    });
+    css+=`\n --font-heaading:"${tokens.typography.headingFont}";\n`;
+    css+=` --font-body:"${tokens.typography.bodyFont}";\n`;
+    Object.entries(tokens.typography.scale).forEach(([k,v])=>{
+        css+=` --font-${k}: ${v}px;\n`;
+    });
+    Object.entries(tokens.colors.image || {}).forEach((hex,i)=>{
+        css+=` --color-image-${i+1}: ${hex};\n`;
     })
+    css+=`}\n`;
+    downloadFile(css, "tokens.css");
 }
+
+function exportJSON(){
+    const tokens=collectTokens();
+    downloadFile(JSON.stringify(tokens, null,2), "tokens.json");
+}
+ function downloadFile(content,filename){
+    const blob=new Blob([content], {type:"text/plain"});
+    const a=document.createElement("a");
+
+    a.href=URL.createObjectURL(blob);
+    a.download=filename;
+    a.click();
+ }
